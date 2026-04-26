@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PWA Meta -->
+  <meta name="theme-color" content="#1A2A3A" />
+  <meta name="background-color" content="#1A2A3A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+
+  <title>JFO Analytics Dashboard</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0D0F12;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    /* JFO Install Button */
+    .install-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 28px;
+      background: #1A2A3A;
+      color: #C8CCD4;
+      border: 2px solid #FF7A00;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 0 12px rgba(255, 122, 0, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    .install-button:hover {
+      background: #0D0F12;
+      box-shadow: 0 0 18px rgba(255, 122, 0, 0.9);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Full-Screen Looker Dashboard -->
+  <iframe 
+    src="{{LOOKER_URL}}"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Install Button -->
+  <button id="installBtn" class="install-button">Install App</button>
+
+  <!-- Install Logic -->
+  <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    installBtn.style.display = 'block';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    installBtn.addEventListener('click',
