@@ -2,15 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Engagement Dashboard</title>
+  <title>Insert_CloudFlare_Name_Here</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/manifest.json" />
+
+  <style>
+    #installButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 18px;
+      background: #0A6CFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
 </head>
+
 <body style="margin:0;padding:0;overflow:hidden;">
+
   <iframe
-    src="__LOOKER_URL__"
+    src="Insert CLIENT_LOOKER_URL_HERE"
     style="border:0;width:100vw;height:100vh;"
     allowfullscreen
   ></iframe>
+
+  <button id="installButton">Install Dashboard</button>
+
+  <script>
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+
+    // Detect if already installed
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if (isStandalone) {
+      installButton.style.display = 'none';
+    }
+
+    // Listen for install availability
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      if (!isStandalone) {
+        installButton.style.display = 'block';
+      }
+    });
+
+    // Handle install button click
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+
+      if (result.outcome === 'accepted') {
+        installButton.style.display = 'none';
+      }
+
+      deferredPrompt = null;
+    });
+
+    // Hide button after installation
+    window.addEventListener('appinstalled', () => {
+      installButton.style.display = 'none';
+      deferredPrompt = null;
+    });
+  </script>
+
+  <script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+
 </body>
 </html>
