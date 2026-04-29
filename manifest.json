@@ -1,19 +1,19 @@
 {
-  "name": "Insert_CloudFlare_Name_Here",
-  "short_name": "Insert_CloudFlare_Name_Here",
+  "name": "Zorana's Pizza dashboard",
+  "short_name": "zorana-pizza-dashboard",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0D0F12",
   "theme_color": "#0A6CFF",
-  "description": "Client dashboard powered by JFO Technologies.",
+  "description": "Dashboard powered by JFO Technologies.",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
